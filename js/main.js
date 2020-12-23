@@ -44,8 +44,22 @@ let gameLoop = () => {
 
 let detectHit = () => {
     //TODO: write collision detection
-    console.log('detecting hit')
+    if (
+        hero.x + hero.width >= ogre.x && 
+        hero.x <= ogre.x + ogre.width &&
+        hero.y <= ogre.y + ogre.height &&
+        hero.y + hero.height >= ogre.y
+        ) {
+        endGame()
+    } 
 }
+    let endGame = () => {
+        ogre.alive= false
+        statusDisplay.innerText = 'You murdered Shrek!'
+        setTimeout(() => {
+            clearInterval(gameInterval)
+        }, 200)
+    }
 
 let movementHandler = (e) => {
     // move my hero based on the key pressed.
@@ -61,25 +75,8 @@ let movementHandler = (e) => {
     } else {
         console.log(`${e.key} won't make you move`)
     }
-
-    /*
-    switch(e.key) {
-        case 'ArrowUp':
-            hero.y -= movement //moveup
-            break
-        case 'ArrowLeft': 
-            hero.x -= movement //move left
-            break
-        case 'ArrowDown':
-            hero.y += movement // move down
-            break
-        cast 'ArrowRight':
-            hero.x += movement // move right
-            break
-        default:
-            console.log(`${e.key} won't make you move`)
-    }*/
 }
+
 //set event listener for keydown
 document.addEventListener('keydown', movementHandler)
 //initializes the game
@@ -89,4 +86,3 @@ let gameInterval = setInterval(gameLoop, 100)
 document.querySelector('#btm-left').addEventListener('click', () => {
     clearInterval(gameInterval)
 })
-
